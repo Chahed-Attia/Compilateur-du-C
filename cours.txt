@@ -1,0 +1,50 @@
+#28/09/2026
+Creeation d'un arbre 
+struct Node {
+    int type 
+    int valeur
+    string ident
+    int ligne
+    int nbenfant
+    Node enfant []  ( on fait un tableau dynamique qui conyient les enfants)
+}
+
+Node node(int type)
+Node node_v(int type, int valeur)
+Node node_i(int type, string ident)
+Node node_1(int type, Node enfant_1)
+Node node_2(int type, Node enfant_1 enfant_2)
+ajouter_enfant(Node parent, Node enfant)
+
+nd_constant
+nd_neg
+
+gencode(){
+    Node A = AnaSem()
+    .....
+}
+Node AnaSem (){
+    Node A= AnaSunt()
+    return A
+}
+Node AnaSynt(){
+    ......
+    return A
+}
+Node F(){
+    return I()
+}
+Node I(){
+    Node e=E()
+    accept(token_preregule)
+    return e
+}
+Node A(){
+    if(check(token_const))
+    return node_v(nd_const, last_valeur)
+    if(check(token_paranoun))
+    Node e =E()
+    accept(token_parafem)
+    return
+}
+erreur()
