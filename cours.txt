@@ -48,3 +48,38 @@ Node A(){
     return
 }
 erreur()
+
+msm -d -lambda < tot.txt
+print(".start")
+print("dbg")
+print("halt)
+
+gencode(){
+    Node A = Anasem()
+    gennode(A)
+}
+gennode(Node N){
+    switch(N.type){
+
+    }
+}
+
+
+Exemple : (3);
+
+Tokens : LPAREN CONST(3) RPAREN SEMI EOS
+AnaSem()
+ └ AnaSynt()
+    └ F()
+       └ I()
+          ├ E()
+          │  └ A()
+          │     ├ check(CONST) ? non, courant = LPAREN
+          │     ├ check(LPAREN) ? oui, on avance
+          │     ├ E()
+          │     │  └ A()
+          │     │     └ check(CONST) ? oui → renvoie node_v(ND_CONST, 3)
+          │     ├ accept(RPAREN) ✔
+          │     └ renvoie l'arbre du 3
+          └ accept(SEMI) ✔
+             renvoie l'arbre 

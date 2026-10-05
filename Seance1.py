@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import Enum, auto
 
 class TokType(Enum):
@@ -154,11 +154,81 @@ def check(type_attendu):
     return False
 
 
-# --- Utilisation ---
-init("int x = 5 + 3;")
-while courant.type != TokType.TOK_EOS:
-    print(courant)
-    next()
+
+# ---------- Arbre ----------
+class NodeType(Enum):
+    ND_CONST = auto()
+    ND_NEG = auto()
+    ND_ADD = auto()
+    ND_SUB = auto()
+    ND_MUL = auto()
+    ND_DIV = auto()
+    ND_MOD = auto()
+
+@dataclass
+class Node:
+    type: NodeType
+    valeur: int = 0
+    ident: str = ""
+    ligne: int = 0
+    enfants: list = field(default_factory=list)
+
+def node(type):              return Node(type)
+def node_v(type, valeur):    return Node(type, valeur=valeur)
+def node_i(type, ident):     return Node(type, ident=ident)
+def node_1(type, e1):        return Node(type, enfants=[e1])
+def node_2(type, e1, e2):    return Node(type, enfants=[e1, e2])
+def ajouter_enfant(parent, enfant):
+    parent.enfants.append(enfant)
+
+# ---------- Erreurs / accept ----------
+def erreur(msg):
+    raise SyntaxError(msg)
+
+def accept(type_attendu):
+    if not check(type_attendu):
+        erreur(f"Attendu {type_attendu}, trouvé {courant.type}")
+
+# ---------- Analyse syntaxique ----------
+def A():
+    if check(TokType.TOK_CONST):
+        return node_v(NodeType.ND_CONST, last.valeur)
+    if check(TokType.TOK_LPAREN):
+        e = E()
+        accept(TokType.TOK_RPAREN)
+        return e
+    erreur("Atome attendu")
+
+def E():
+    return A()          # pour l'instant juste un atome, on étendra après
+
+def I():
+    e = E()
+    accept(TokType.TOK_SEMI)
+    return e
+
+def F():
+    return I()
+
+def AnaSynt():
+    return F()
+
+def AnaSem():
+    return AnaSynt()
+
+# ---------- Génération de code ----------
+def gennode(N):
+    if N.type == NodeType.ND_CONST:
+        print(f"push {N.valeur}")     # à remplacer par l'instruction de ta machine
+
+def gencode():
+    A_ = AnaSem()
+    print(".start")
+    gennode(A_)
+    print("dbg")
+    print("halt")
+
+
 
 
     
